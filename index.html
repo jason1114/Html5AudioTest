@@ -31,10 +31,12 @@
 		<a onclick="stopRecording()" class="button button-circle button-caution" type="button" value="">Stop<a>		
 	</div>
 	<p id="extra">
-		<a class="button button-flat-action">Download</a>
+		<a id="download" onclick="downloadWAV()" class="button button-flat-action">Download</a>
 	</p>
 	<script type="text/javascript" src="recorder.js"> </script>
+	<script type="text/javascript" src="FileSaver.js"></script>
 	<script>
+		var record;
 		var onFail = function(e) {
 			console.log('Rejected!', e);
 		};
@@ -68,7 +70,13 @@
 			recorder.stop();
 			recorder.exportWAV(function(s) {
 				audio.src = window.URL.createObjectURL(s);
+				record = s;
 			});
+		}
+		function downloadWAV(){
+			if(record){
+				saveAs(record,"record.wav");
+			}
 		}
 	</script>	
 </body>
